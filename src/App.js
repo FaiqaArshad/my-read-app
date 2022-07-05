@@ -92,10 +92,7 @@ function App() {
 
         {showSearchPage ? (
 
-          // <SearchBooks
-          //   books={books}
-
-          //   showSearchPage={showSearchPage} setShowSearchpage={setShowSearchpage}   />
+         
 
           <div className="search-books">
             <div className="search-books-bar">

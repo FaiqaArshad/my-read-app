@@ -5,9 +5,11 @@ const Searchbtn = ({setShowSearchpage , showSearchPage}) => {
   return (
     <div>
           <div className="open-search">
-            <Link  to = 'search'>
-            <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
+           
+            <Link  to = "search"
+            onClick={() => setShowSearchpage(!showSearchPage)}>Add a book
             </Link> 
+            
           </div>
     </div>
   )
