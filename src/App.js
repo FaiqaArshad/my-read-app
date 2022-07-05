@@ -2,8 +2,7 @@ import "./App.css";
 import { useState } from "react";
 import Shelves from "./components/Shelves";
 import Searchbtn from "./components/Searchbtn";
-import { BrowserRouter as Router, Routes, Route, Link, BrowserRouter } from 'react-router-dom'
-
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Header from "./components/Header";
 import { useEffect } from "react";
 import * as BooksAPI from './BookAPI'
@@ -30,7 +29,7 @@ function App() {
     BooksAPI.update(book, shelf).then(data => console.log(data));
   }
 
-// getting data from API
+  // getting data from API
   useEffect(() => {
     BooksAPI.getAll()
       .then(data => {
@@ -40,7 +39,7 @@ function App() {
 
       }
       );
-  }, [books])
+  }, [])
 
   useEffect(() => {
     let isReturnSearch = true;
@@ -87,53 +86,61 @@ function App() {
 
 
   return (
-    <div className="app">
+
+    <>
       <BrowserRouter>
 
-        {showSearchPage ? (
 
-         
+        <Routes>
 
-          <div className="search-books">
-            <div className="search-books-bar">
-              <a
-                className="close-search"
-                onClick={() => setShowSearchpage(!showSearchPage)}
-              >
-                Close
-              </a>
-              <div className="search-books-input-wrapper">
-                <input
-                  type="text"
-                  placeholder="Search by title, author, or ISBN"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
 
-                />
+          <Route path="/search" element={
+            <div className="search-books">
+              <div className="search-books-bar">
+                <Link to = "/">
+                  < button className="close-search">  Close</button>
+                  {/* // onClick={() => setShowSearchpage(!showSearchPage)} */}
+
+                
+                
+                  </Link>
+                <div className="search-books-input-wrapper">
+                  <input
+                    type="text"
+                    placeholder="Search by title, author, or ISBN"
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+
+                  />
+                </div>
+              </div>
+              <div className="search-books-results">
+                <ol className="books-grid">
+
+                  {console.log(`search result! ${searchBooks}`)}
+                  {updateSearchShelf.map(book => (
+                    <li key={book.id}>
+                      <Books book={book}
+                        changeShelf={chaneBookShelf} />
+                    </li>
+                  ))}
+
+                </ol>
               </div>
             </div>
-            <div className="search-books-results">
-              <ol className="books-grid">
 
-                {console.log(`search result! ${searchBooks}`)}
-                {updateSearchShelf.map(book => (
-                  <li key={book.id}>
-                    <Books book={book}
-                      changeShelf={chaneBookShelf} />
-                  </li>
-                ))}
-
-              </ol>
-            </div>
-          </div>
+          } />
 
 
-        )
-          :
-          (
+
+          <Route path="/" element={
+
 
             <div className="list-books">
+
+
               <Header />
+
               <div className="list-bools-content">
                 <Shelves books={books}
                   changeShelf={chaneBookShelf} />
@@ -141,11 +148,18 @@ function App() {
               {/* Search button */}
               <Searchbtn
                 setShowSearchpage={setShowSearchpage} showSearchPage={showSearchPage} />
+
             </div>
-          )
-        }
+
+          } />
+        </Routes>
+
       </BrowserRouter>
-    </div>
+
+
+    </>
+
+
   );
 }
 export default App;
