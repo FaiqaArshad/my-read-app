@@ -1,7 +1,7 @@
 # MyReads Project
 
-This is the starter template for the final assessment project for Udacity's React Fundamentals course. The goal of this template is to save you time by providing a static example of the CSS and HTML markup that may be used, but without any of the React code that is needed to complete the project. If you choose to start with this template, your job will be to add interactivity to the app by refactoring the static code in this template.
-
+This is the simple React js project to track the reading app. Basically in main page of the application it has three shelves that is: `1) Continue Reading 2)  Want to Read 3)  Read `
+Each book in a respective shelf have four different options to select that is `1) Continue Reading 2)  Want to Read 3)  Read  4) none`. USer has options to select to move the book to respective shelf. Each book has information of their title and authors. Moreover it has one more functionality that is to search the respcetive and then moving the book to repective shlef otherwise defualt option is none.
 
 
 ## TL;DR
@@ -11,7 +11,7 @@ To get started developing right away:
 - install all project dependencies with `npm install`
 - start the development server with `npm start`
 
-## What You're Getting
+## Project Structure
 
 ```bash
 ├── node_modules # packages and dependencies to be used throughout the project
@@ -40,13 +40,11 @@ To get started developing right away:
     |   ├── Searchbtn.js # Redirecting to sEarch functionality of an application
     
 
-```
 
-Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed.
 
 ## Backend Server
 
-To simplify your development process,a backend server has been provided for you to develop against. The provided file [`BooksAPI.js`](src/BooksAPI.js) contains the methods you will need to perform necessary operations on the backend:
+To simplify your development process,a backend server has been provided for you to develop against. The provided file [`BooksAPI.js`](src/BooksAPI.js) contains the methods  to perform necessary operations on the backend:
 
 - [`getAll`](#getall)
 - [`update`](#update)
