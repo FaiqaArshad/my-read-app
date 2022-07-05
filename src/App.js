@@ -72,25 +72,32 @@ function App() {
 
   useEffect(() => {
     let isReturnSearch = true;
-    if (data) {
+    if(data.length <=0)
+    {
+      setSetBooks([])
+    }
+    if (data.length>0) {
       BooksAPI.search(data).then(data => {
 
         if (data.error) {
+          
           setSetBooks([])
 
         }
+        
         else {
           if (isReturnSearch)
             setSetBooks(data);
         }
       })
     }
+
     return () => {
       isReturnSearch = false;
       setSetBooks([])
     }
 
-  }, [query])
+  }, [data])
 
   return (
 
