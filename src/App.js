@@ -7,27 +7,16 @@ import Header from "./components/Header";
 import { useEffect } from "react";
 import * as BooksAPI from './BookAPI'
 import Books from "./components/Book";
+import { useDebounce } from 'use-debounce'
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
   const [query, setQuery] = useState("");
   const [books, setBooks] = useState([])
   const [SearchMap, setSearchMap] = useState(new Map());
   const [searchBooks, setSetBooks] = useState([])
+  const [data] = useDebounce(query, 500)
   const [updateSearchShelf, setUpadteSearchShelf] = useState([])
 
-  const chaneBookShelf = (book, shelf) => {
-    const updatedBooks = books.map(bk => {
-      if (bk.id === book.id) {
-        book.shelf = shelf;
-        return book;
-      }
-      return bk;
-    })
-
-
-    setBooks(updatedBooks);
-    BooksAPI.update(book, shelf).then(data => console.log(data));
-  }
 
   // getting data from API
   useEffect(() => {
@@ -41,14 +30,54 @@ function App() {
       );
   }, [])
 
+
+  useEffect(() => {
+    const updated = searchBooks.map((books) => {
+      if (SearchMap.has(books.id)) {
+        return SearchMap.get(books.id);
+      }
+
+      else
+        return books
+    })
+    setUpadteSearchShelf(updated)
+
+  }, [searchBooks])
+
+  const bookmap = (books) => {
+    const data = new Map();
+    books.map(book =>
+      data.set(book.id, book))
+    return data
+
+  }
+
+
+  const chaneBookShelf = (book, shelf) => {
+    const updatedBooks = books.map(bk => {
+      if (bk.id === book.id) {
+        book.shelf = shelf;
+        return book;
+      }
+      return bk;
+    })
+    if (!SearchMap.has(book.id)) {
+      book.shelf = shelf;
+      updatedBooks.push(book)
+    }
+
+    setBooks(updatedBooks);
+    BooksAPI.update(book, shelf);
+  }
+
   useEffect(() => {
     let isReturnSearch = true;
-    if (query) {
-      BooksAPI.search(query).then(data => {
-        console.log(`your searched data is here! ${data}`)
+    if (data) {
+      BooksAPI.search(data).then(data => {
 
         if (data.error) {
-          console.log(data)
+          setSetBooks([])
+
         }
         else {
           if (isReturnSearch)
@@ -60,30 +89,8 @@ function App() {
       isReturnSearch = false;
       setSetBooks([])
     }
+
   }, [query])
-
-
-
-  useEffect(() => {
-    const updated = searchBooks.map((books) => {
-      if (SearchMap.has(books.id)) {
-        return SearchMap.get(books.id);
-      }
-      else
-        return books
-    })
-    setUpadteSearchShelf(updated)
-
-  }, [searchBooks])
-  const bookmap = (books) => {
-    const data = new Map();
-    books.map(book =>
-      data.set(book.id, book))
-    return data
-
-  }
-
-
 
   return (
 
@@ -97,13 +104,13 @@ function App() {
           <Route path="/search" element={
             <div className="search-books">
               <div className="search-books-bar">
-                <Link to = "/">
+                <Link to="/">
                   < button className="close-search">  Close</button>
-                  {/* // onClick={() => setShowSearchpage(!showSearchPage)} */}
+              
 
-                
-                
-                  </Link>
+
+
+                </Link>
                 <div className="search-books-input-wrapper">
                   <input
                     type="text"

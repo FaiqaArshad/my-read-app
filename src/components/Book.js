@@ -11,7 +11,10 @@ const Books = ({ changeShelf, book }) => {
                             width: 128,
                             height: 193,
                             backgroundImage:
-                                `url(${book.imageLinks.thumbnail})`,
+                                // `url(${book.imageLinks.thumbnail})`,
+
+                                `url(${(book && book.imageLinks && book.imageLinks.smallThumbnail) ? book.imageLinks.smallThumbnail : `https://images.unsplash.com/photo-1541963463532-d68292c34b19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=388&q=80`} )`
+
                         }}
                     ></div>
                     <div className="book-shelf-changer">
