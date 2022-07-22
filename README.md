@@ -4,7 +4,7 @@ This is the simple React js project to track the reading app. Basically in main 
 Each book in a respective shelf have four different options to select that is `1) Continue Reading 2)  Want to Read 3)  Read  4) none`. USer has options to select to move the book to respective shelf. Each book has information of their title and authors. Moreover it has one more functionality that is to search the respcetive and then moving the book to repective shlef otherwise defualt option is none.
 
 
-## TL;DR
+## TL;
 
 To get started developing right away:
 
